@@ -6,7 +6,7 @@ resource "aws_alb_target_group" "myTG" {
   protocol = "HTTP"
   name = "front-alb-tg"
   health_check {
-    path                = "/home"   # 헬스체크 경로
+    path                = "/"   # 헬스체크 경로
     interval            = 10                   # 검사 주기 (초)
     timeout             = 5                    # 타임아웃 (초)
     healthy_threshold   = 2                    # 몇 번 연속 성공하면 "Healthy"
@@ -39,7 +39,7 @@ resource "aws_launch_template" "front_launch_template" {
   name = "front_launch_template"
   image_id = "ami-075e056c0f3d02523"
   
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     backend_DNS = var.back_dns
   }))
@@ -50,7 +50,7 @@ resource "aws_launch_template" "front_launch_template" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "front-template"
+      Name = "next-js"
     }
   }
 }
@@ -72,4 +72,34 @@ resource "aws_autoscaling_group" "myASG" {
 resource "aws_autoscaling_attachment" "myASG_attachment" {
   autoscaling_group_name = aws_autoscaling_group.myASG.id 
   lb_target_group_arn = aws_alb_target_group.myTG.arn 
+}
+####################
+## Code Deploy
+resource "aws_codedeploy_deployment_group" "next-js_dg" {
+  app_name              = aws_codedeploy_app.next-js_app.name
+  deployment_group_name = "next-js-dg"
+  service_role_arn      = var.iam_code_deploy_arn
+
+
+  deployment_style {
+    deployment_option = "WITH_TRAFFIC_CONTROL"
+    deployment_type   = "IN_PLACE"
+  }
+  
+  autoscaling_groups = [ aws_autoscaling_group.myASG.name ]
+
+  load_balancer_info {
+    target_group_info {
+      name = aws_alb_target_group.myTG.name
+    }
+  }
+  ec2_tag_filter {
+    key   = "Name"
+    type  = "KEY_AND_VALUE"
+    value = "next-js"
+  }
+}
+resource "aws_codedeploy_app" "next-js_app" {
+  name = "next-js-app"
+  compute_platform = "Server"
 }

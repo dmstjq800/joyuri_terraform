@@ -26,21 +26,22 @@ frontend-url=${front_DNS}
 spring.datasource.url=jdbc:mariadb://${DB_DNS}/project_dev?characterEncoding=utf8mb4&serverTimezone=Asia/Seoul
 EOF
 
-cat <<EOF > /etc/systemd/system/springboot.service
-[Unit]
-Description=Joyuri Spring Boot App
-After=network.target
+# cat <<EOF > /etc/systemd/system/springboot.service
+# [Unit]
+# Description=Joyuri Spring Boot App
+# After=network.target
 
-[Service]
-User=ec2-user
-ExecStart=/usr/bin/java -jar /opt/springboot/joyuri.jar \
-  --spring.config.location=file:/opt/springboot/application.properties
-SuccessExitStatus=143
-Restart=on-failure
-RestartSec=3
 
-[Install]
-WantedBy=multi-user.target
-EOF
+# [Service]
+# User=ec2-user
+# ExecStart=/usr/bin/java -jar /opt/springboot/joyuri.jar \
+#   --spring.config.location=file:/opt/springboot/application.properties
+# SuccessExitStatus=143
+# Restart=on-failure
+# RestartSec=3
+
+# [Install]
+# WantedBy=multi-user.target
+# EOF
 
 # ALTER DATABASE project_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;

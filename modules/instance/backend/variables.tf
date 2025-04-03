@@ -28,5 +28,5 @@ variable "front_dns" {
 }
 variable "db_instance" {
   description = "RDS instance"
-  type = string
+
 }

@@ -23,6 +23,7 @@ module "front" {
   private_subnet_id = module.network.private_subnet_id ## Private Subnet ID
   iam_role_profile_arn = module.security_groups.iam_role_profile_arn ## IAM ROLE
   back_dns = module.back.back_dns
+  iam_code_deploy_arn = module.security_groups.iam_code_deploy_arn
 }
 # Tomcat WAS
 module "back" {
@@ -32,7 +33,7 @@ module "back" {
   private_subnet_id = module.network.private_subnet_id
   iam_role_profile_arn = module.security_groups.iam_role_profile_arn
 
-  front_dns = module.web.front_dns
+  front_dns = module.front.front_dns
   iam_code_deploy_arn = module.security_groups.iam_code_deploy_arn
   db_dns = module.DB.db_dns
   db_instance = module.DB.db_instance

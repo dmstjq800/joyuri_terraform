@@ -22,3 +22,7 @@ variable "back_dns" {
   description = "backend_dns"
   type = string
 }
+variable "iam_code_deploy_arn" {
+  description = "code deploy iam role"
+  type = string
+}
