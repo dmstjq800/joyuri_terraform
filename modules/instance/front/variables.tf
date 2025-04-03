@@ -16,8 +16,9 @@ variable "private_subnet_id" {
 }
 variable "iam_role_profile_arn" {
   description = "iam_instance_profile_arn"
+  type = string
 }
-variable "was_dns" {
-  description = "web_dns"
+variable "back_dns" {
+  description = "backend_dns"
   type = string
 }

@@ -41,7 +41,7 @@ resource "aws_launch_template" "front_launch_template" {
   
   instance_type = "t2.micro"
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
-    TOMCAT_DNS=var.was_dns
+    backend_DNS = var.back_dns
   }))
   iam_instance_profile {
     arn = var.iam_role_profile_arn

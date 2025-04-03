@@ -15,18 +15,18 @@ module "network" {
 }
 ###################### 
 # apache2 WEB 
-module "web" {
-  source = "../modules/instance/web"
+module "front" {
+  source = "../modules/instance/front"
   vpc_id = module.network.vpc_id
   vpc_security_group_id = module.security_groups.web_security_group_id ## 보안그룹
   public_subnet_id = module.network.public_subnet_id ## Public Subnet ID
   private_subnet_id = module.network.private_subnet_id ## Private Subnet ID
   iam_role_profile_arn = module.security_groups.iam_role_profile_arn ## IAM ROLE
-  was_dns = module.was.was_dns ## Tomcat server DNS
+  back_dns = module.back.back_dns
 }
 # Tomcat WAS
-module "was" {
-  source = "../modules/instance/was"
+module "back" {
+  source = "../modules/instance/backend"
   vpc_id = module.network.vpc_id
   security_group_id = module.security_groups.was_security_group_id
   private_subnet_id = module.network.private_subnet_id
