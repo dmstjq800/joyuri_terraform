@@ -17,13 +17,20 @@ systemctl start codedeploy-agent
 systemctl enable codedeploy-agent
 
 
-mkdir -p /opt/springboot
-cd /opt/springboot
+mkdir -p /opt/springboot /opt/images
+cd /opt/springboot 
 aws s3 cp s3://mybucket-ces-joyuri/joyuri/application.properties .
-aws s3 cp s3://mybucket-ces-joyuri/joyuri/joyuri.jar .
+aws s3 cp s3://mybucket-ces-joyuri/joyuri/images.zip /opt/images/images.zip
+unzip /opt/images/images.zip -d /opt/images/
+rm -rf /opt/images/images.zip
+
+# aws s3 cp s3://mybucket-ces-joyuri/joyuri/joyuri.jar .
 cat <<EOF >> application.properties
-frontend-url=${front_DNS}
+frontend-url=http://${front_DNS}
 spring.datasource.url=jdbc:mariadb://${DB_DNS}/project_dev?characterEncoding=utf8mb4&serverTimezone=Asia/Seoul
+multipart.image.url=/opt/images/
+image.upload-dir=/opt/images/
+spring.jpa.hibernate.ddl-auto=create
 EOF
 
 # cat <<EOF > /etc/systemd/system/springboot.service

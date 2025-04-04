@@ -5,6 +5,7 @@ resource "aws_alb_target_group" "myTG" {
   port = 8080 ## 로드밸런서 8080포트로 접속시 타겟 8080포트로 연결
   protocol = "HTTP"
   name = "backend-alb-tg"
+  deregistration_delay = 20
   health_check {
     path                = "/home"   # 헬스체크 경로
     interval            = 10                   # 검사 주기 (초)
@@ -12,6 +13,7 @@ resource "aws_alb_target_group" "myTG" {
     healthy_threshold   = 2                    # 몇 번 연속 성공하면 "Healthy"
     unhealthy_threshold = 2                    # 몇 번 연속 실패하면 "Unhealthy"
     matcher             = "200-399"            # 응답 코드 범위
+
   }
   
 }

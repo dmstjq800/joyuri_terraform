@@ -42,6 +42,12 @@ resource "aws_security_group" "backSG" {
     protocol = "tcp"
     cidr_blocks = [ "0.0.0.0/0" ]
   }
+  ingress {
+    from_port = 587
+    to_port = 587
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
   egress {
     from_port = 0
     to_port = 0

@@ -13,8 +13,8 @@ module "network" {
   private_sn_cidr = [ "10.0.3.0/24", "10.0.4.0/24" ]
   private_dbsn_cidr = [ "10.0.5.0/24", "10.0.6.0/24" ]
 }
-###################### 
-# apache2 WEB 
+##################### 
+#apache2 WEB 
 module "front" {
   source = "../modules/instance/front"
   vpc_id = module.network.vpc_id

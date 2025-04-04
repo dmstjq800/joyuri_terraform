@@ -5,6 +5,7 @@ resource "aws_alb_target_group" "myTG" {
   port = 3000
   protocol = "HTTP"
   name = "front-alb-tg"
+  deregistration_delay = 20
   health_check {
     path                = "/"   # 헬스체크 경로
     interval            = 10                   # 검사 주기 (초)

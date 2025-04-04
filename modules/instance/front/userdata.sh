@@ -9,17 +9,13 @@ chmod +x ./install
 systemctl start codedeploy-agent
 systemctl enable codedeploy-agent
 
-
 yum -y install npm 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 . ~/.bashrc
 
 mkdir -p /joyuri
 cd /joyuri
-chown -R ec2-user:ec2-user /joyuri
+
 cat <<EOF > .env.production
 NEXT_PUBLIC_API_BASED_URL = http://${backend_DNS}
 EOF
-# npm install
-# npm run build
-# npm start
