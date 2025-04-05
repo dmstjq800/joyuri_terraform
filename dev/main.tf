@@ -14,7 +14,7 @@ module "network" {
   private_dbsn_cidr = [ "10.0.5.0/24", "10.0.6.0/24" ]
 }
 ##################### 
-#apache2 WEB 
+# Next js
 module "front" {
   source = "../modules/instance/front"
   vpc_id = module.network.vpc_id
@@ -25,7 +25,7 @@ module "front" {
   back_dns = module.back.back_dns
   iam_code_deploy_arn = module.security_groups.iam_code_deploy_arn
 }
-# Tomcat WAS
+# Springboot
 module "back" {
   source = "../modules/instance/backend"
   vpc_id = module.network.vpc_id

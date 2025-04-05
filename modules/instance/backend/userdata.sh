@@ -24,7 +24,6 @@ aws s3 cp s3://mybucket-ces-joyuri/joyuri/images.zip /opt/images/images.zip
 unzip /opt/images/images.zip -d /opt/images/
 rm -rf /opt/images/images.zip
 
-# aws s3 cp s3://mybucket-ces-joyuri/joyuri/joyuri.jar .
 cat <<EOF >> application.properties
 frontend-url=http://${front_DNS}
 spring.datasource.url=jdbc:mariadb://${DB_DNS}/project_dev?characterEncoding=utf8mb4&serverTimezone=Asia/Seoul
@@ -33,22 +32,3 @@ image.upload-dir=/opt/images/
 spring.jpa.hibernate.ddl-auto=create
 EOF
 
-# cat <<EOF > /etc/systemd/system/springboot.service
-# [Unit]
-# Description=Joyuri Spring Boot App
-# After=network.target
-
-
-# [Service]
-# User=ec2-user
-# ExecStart=/usr/bin/java -jar /opt/springboot/joyuri.jar \
-#   --spring.config.location=file:/opt/springboot/application.properties
-# SuccessExitStatus=143
-# Restart=on-failure
-# RestartSec=3
-
-# [Install]
-# WantedBy=multi-user.target
-# EOF
-
-# ALTER DATABASE project_dev CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;

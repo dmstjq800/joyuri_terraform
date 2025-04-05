@@ -2,7 +2,7 @@
 # Target Group 생성
 resource "aws_alb_target_group" "myTG" {
   vpc_id = var.vpc_id 
-  port = 8080 ## 로드밸런서 8080포트로 접속시 타겟 8080포트로 연결
+  port = 8080
   protocol = "HTTP"
   name = "backend-alb-tg"
   deregistration_delay = 20
