@@ -29,6 +29,7 @@ frontend-url=http://${front_DNS}
 spring.datasource.url=jdbc:mariadb://${DB_DNS}/project_dev?characterEncoding=utf8mb4&serverTimezone=Asia/Seoul
 multipart.image.url=/opt/images/
 image.upload-dir=/opt/images/
-spring.jpa.hibernate.ddl-auto=create
+server.port=8080
+spring.jpa.hibernate.ddl-auto=update
 EOF
 
