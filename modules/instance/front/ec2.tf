@@ -20,7 +20,7 @@ resource "aws_alb_target_group" "myTG" {
 resource "aws_alb" "myALB" {
   name = "front-alb"
   load_balancer_type = "application"
-  security_groups = [ var.vpc_security_group_id ]
+  security_groups = [ var.alb_security_group_id ]
   subnets = var.public_subnet_id
 }
 ##################################
@@ -47,7 +47,7 @@ resource "aws_launch_template" "front_launch_template" {
   iam_instance_profile {
     arn = var.iam_role_profile_arn
   }
-  vpc_security_group_ids = [ var.vpc_security_group_id ]
+  vpc_security_group_ids = [ var.security_group_id ]
   tag_specifications {
     resource_type = "instance"
     tags = {
@@ -61,19 +61,17 @@ resource "aws_autoscaling_group" "myASG" {
   min_size = 1
   max_size = 5
   desired_capacity = 1
-  health_check_grace_period = 30
-  health_check_type = "EC2"
+  health_check_grace_period = 300
+  health_check_type = "ELB"
   force_delete = false 
+  target_group_arns = [ aws_alb_target_group.myTG.arn ]
   vpc_zone_identifier = var.private_subnet_id
   launch_template {
     id = aws_launch_template.front_launch_template.id 
     version = "$Latest"
   }
 }
-resource "aws_autoscaling_attachment" "myASG_attachment" {
-  autoscaling_group_name = aws_autoscaling_group.myASG.id 
-  lb_target_group_arn = aws_alb_target_group.myTG.arn 
-}
+
 ####################
 ## Code Deploy
 resource "aws_codedeploy_deployment_group" "next-js_dg" {

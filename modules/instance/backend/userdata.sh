@@ -27,7 +27,7 @@ rm -rf /opt/images/images.zip
 cat <<EOF >> application.properties
 frontend-url=http://${front_DNS}
 spring.datasource.url=jdbc:mariadb://${DB_DNS}/project_dev?characterEncoding=utf8mb4&serverTimezone=Asia/Seoul
-multipart.image.url=/opt/images/
+multipart.image.url=/opt/images/ 
 image.upload-dir=/opt/images/
 server.port=8080
 spring.jpa.hibernate.ddl-auto=update

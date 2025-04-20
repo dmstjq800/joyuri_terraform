@@ -2,8 +2,12 @@ variable "vpc_id" {
   description = "vpc_id"
   type = string
 }
+variable "alb_security_group_id" {
+  description = "alb_security_group_id"
+  type = string
+}
 variable "security_group_id" {
-  description = "security-group-id"
+  description = "security_group_id"
   type = string
 }
 variable "private_subnet_id" {

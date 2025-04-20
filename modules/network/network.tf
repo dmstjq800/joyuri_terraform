@@ -99,3 +99,16 @@ resource "aws_route_table_association" "private_route_table_association" {
   subnet_id = aws_subnet.myPrivateSN[count.index].id 
   route_table_id = aws_route_table.private_route_table.id
 }
+##########################
+# DB 라우팅테이블 생성 및 연결
+resource "aws_route_table" "private_db_route_table" {
+  vpc_id = aws_vpc.myVPC.id 
+  tags = {
+    Name = "private-db-route-table"
+  }
+}
+resource "aws_route_table_association" "private_db_route_table_association" {
+  count = length(var.private_dbsn_cidr)
+  subnet_id = aws_subnet.myPrivateDBSN[count.index].id
+  route_table_id = aws_route_table.private_db_route_table.id
+}

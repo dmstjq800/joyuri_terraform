@@ -2,7 +2,11 @@ variable "vpc_id" {
   description = "vpc_id"
   type = string
 }
-variable "vpc_security_group_id" {
+variable "alb_security_group_id" {
+  description = "alb_security_group_id"
+  type = string
+}
+variable "security_group_id" {
   description = "security_group_id"
   type = string
 }
